@@ -1,5 +1,6 @@
 import sys
 from typing import List
+import math
 # For getting input
 sys.stdin = open('a.txt', 'r')
 sys.stdout = open('a_output.txt', 'w')
@@ -39,7 +40,7 @@ class intersection:
         self.in_degree_total = {}
         self.out_degree = {}
 
-    def addInDegree(self, st: int, t: int) -> None:
+    def addInDegree(self, st: str, t: int) -> None:
         stt = tuple((st, t))
         if stt not in self.in_degree:
             self.in_degree[stt] = 1
@@ -55,7 +56,11 @@ class intersection:
             self.out_degree[st]+= 1
 
     def getSchedule(self) -> list:
-        return [2,1,1]
+        for key in self.in_degree_total:
+            yield [key, int(math.ceil(float(self.in_degree_total[key])/float(D)))]
+    
+    def getScheduleCount(self) -> int:
+        return len(self.in_degree_total)
 
 for i in range(I):
     intersections.append(intersection(i))
@@ -73,19 +78,21 @@ for j in range(V):
     P = int(x[0])
     for i in range(1, P+1):
         street_names[x[i]].addCar(j)
-        intersections[street_names[x[i]].B].addOutDegree(street_names[x[i]].getID())
-        intersections[street_names[x[i]].E].addInDegree(street_names[x[i]].getID(), i)
+        intersections[street_names[x[i]].B].addOutDegree(x[i])
+        intersections[street_names[x[i]].E].addInDegree(x[i], i)
 
 def ret(I: list):
     print(len(I))
     for i in I:
         print(i)
-        l = intersections[i].getSchedule()
-        print(l[0])
-        for j in range(l[0]):
-            stringz = str(l[1]) + " " + str(l[2])
+        l = intersections[i].getScheduleCount()
+        print(l)
+        for j in range(l):
+            sched = next(intersections[i].getSchedule())
+            print(sched)
+            stringz = str(sched[0]) + " " + str(sched(l[1]))
             print(stringz)
 
 
 if __name__ == "__main__":
-    ret([0,1])
+    ret([0,1,2,3])

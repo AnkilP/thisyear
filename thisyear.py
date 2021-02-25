@@ -2,6 +2,7 @@ import sys
 from typing import List
 # For getting input
 sys.stdin = open('a.txt', 'r')
+sys.stdout = open('a_output.txt', 'w')
 
 input = lambda : sys.stdin.readline().strip()
 print = lambda s, end='\n' : sys.stdout.write(str(s) + end)
@@ -39,7 +40,7 @@ class intersection:
         self.out_degree = {}
 
     def addInDegree(self, st: int, t: int) -> None:
-        stt = tuple(st, t)
+        stt = tuple((st, t))
         if stt not in self.in_degree:
             self.in_degree[stt] = 1
             self.in_degree_total[st] = 1
@@ -52,6 +53,9 @@ class intersection:
             self.out_degree[st] = 1
         else:
             self.out_degree[st]+= 1
+
+    def getSchedule(self) -> list:
+        return [2,1,1]
 
 for i in range(I):
     intersections.append(intersection(i))
@@ -72,9 +76,16 @@ for j in range(V):
         intersections[street_names[x[i]].B].addOutDegree(street_names[x[i]].getID())
         intersections[street_names[x[i]].E].addInDegree(street_names[x[i]].getID(), i)
 
-
-
 def ret(I: list):
+    print(len(I))
     for i in I:
         print(i)
-        intersections[i].get
+        l = intersections[i].getSchedule()
+        print(l[0])
+        for j in range(l[0]):
+            stringz = str(l[1]) + " " + str(l[2])
+            print(stringz)
+
+
+if __name__ == "__main__":
+    ret([0,1])

@@ -2,8 +2,8 @@ import sys
 from typing import List
 import math
 # For getting input
-sys.stdin = open('a.txt', 'r')
-sys.stdout = open('a_output.txt', 'w')
+sys.stdin = open('b.txt', 'r')
+sys.stdout = open('b_output.txt', 'w')
 
 input = lambda : sys.stdin.readline().strip()
 print = lambda s, end='\n' : sys.stdout.write(str(s) + end)
